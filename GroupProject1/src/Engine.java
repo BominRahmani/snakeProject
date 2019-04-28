@@ -1,17 +1,16 @@
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
 
-public class engine extends JFrame {
-
-    static final char APPLE = 'A';
+public class Engine {
 
     public static void main(String[] args) {
-        Board b = new Board();
-        b.setSize(800, 600);
-        b.setVisible(true);
+        JFrame frame = new JFrame();
+        Board board = new Board();
 
-        b.setSnake();
-        b.showBoard();
+        frame.add(board);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Snake Project");
+        frame.pack();
+        frame.setVisible(true);
     }
 
 }

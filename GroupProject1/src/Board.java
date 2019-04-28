@@ -13,6 +13,7 @@ public class Board extends JFrame {
     private JTextArea display;
     private char[][] board;
     private Snake snake;
+    private int score;
 
     public Board() {
         super("Snake Project");
@@ -28,6 +29,8 @@ public class Board extends JFrame {
         snake = new Snake();
         board = new char[ROWS][COLUMNS];
         initializeBoard();
+        
+        score = 0;
 
         display.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {

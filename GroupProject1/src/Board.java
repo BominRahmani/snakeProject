@@ -8,7 +8,7 @@ public class Board extends JPanel implements Runnable {
 
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
-    private final int pixel = 25;
+    private final int PIXEL = 25;
     private boolean gameOver;
     private Body head;
     private ArrayList<Body> SNAKE;
@@ -17,7 +17,7 @@ public class Board extends JPanel implements Runnable {
     public Board() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        head = new Body(randomNum(), randomNum(), pixel);
+        head = new Body(randomNum(), randomNum(), PIXEL);
         SNAKE = new ArrayList<Body>();
         SNAKE.add(head);
         score = 0;
@@ -28,7 +28,7 @@ public class Board extends JPanel implements Runnable {
         return rand.nextInt(20) * 25;
     }
 
-    public int length() {
+    public int snakeSize() {
         return SNAKE.size();
     }
 
@@ -44,7 +44,7 @@ public class Board extends JPanel implements Runnable {
         }
 
         //Place the snake on the grid
-        for (int i = 0; i < length(); i++) {
+        for (int i = 0; i < snakeSize(); i++) {
             SNAKE.get(i).paintComponent(g);
         }
     }

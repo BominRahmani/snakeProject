@@ -1,31 +1,57 @@
+import java.awt.Graphics;
+import java.awt.Color;
+
 public class Body {
 
-    private char symbol = 's';
-    private int xPos, yPos;
+    private int xPos;
+    private int yPos;
+    private int height;
+    private int width;
     private boolean isHit;
 
     public Body() {
         xPos = 0;
         yPos = 0;
+        height = 0;
+        width = 0;
         isHit = false;
     }
 
-    public Body(int xPos, int yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public Body(int x, int y, int size) {
+        xPos = x;
+        yPos = y;
+        height = size;
+        width = size;
         isHit = false;
     }
 
-    public char getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(char symbol) {
-        this.symbol = symbol;
+    public void paintComponent(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.fillRect(xPos, yPos, height, width);
     }
 
     public int getxPos() {
         return xPos;
+    }
+
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getyPos() {
@@ -34,10 +60,6 @@ public class Body {
 
     public void setyPos(int yPos) {
         this.yPos = yPos;
-    }
-
-    public void setxPos(int xPos) {
-        this.xPos = xPos;
     }
 
     public boolean isHit() {

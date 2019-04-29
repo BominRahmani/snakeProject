@@ -1,26 +1,34 @@
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
 
-public class Board extends JPanel implements Runnable {
+public class Board extends JPanel implements Runnable, KeyListener {
 
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
-    private final int PIXEL = 25;
+    private final int pixel = 25;
     private boolean gameOver;
     private Body head;
     private ArrayList<Body> SNAKE;
     private int score;
 
     public Board() {
+        setFocusable(true);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        head = new Body(randomNum(), randomNum(), PIXEL);
+        head = new Body(randomNum(), randomNum(), pixel);
         SNAKE = new ArrayList<Body>();
         SNAKE.add(head);
         score = 0;
+
+        addKeyListener(this);
     }
 
     public int randomNum() {
@@ -28,7 +36,7 @@ public class Board extends JPanel implements Runnable {
         return rand.nextInt(20) * 25;
     }
 
-    public int snakeSize() {
+    public int length() {
         return SNAKE.size();
     }
 
@@ -44,7 +52,7 @@ public class Board extends JPanel implements Runnable {
         }
 
         //Place the snake on the grid
-        for (int i = 0; i < snakeSize(); i++) {
+        for (int i = 0; i < length(); i++) {
             SNAKE.get(i).paintComponent(g);
         }
     }
@@ -53,5 +61,33 @@ public class Board extends JPanel implements Runnable {
         while (!gameOver) {
             //Game code
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+        repaint();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_W) {
+            head.setyPos(head.getyPos() - 25);
+        }
+        if (key == KeyEvent.VK_S) {
+            head.setyPos(head.getyPos() + 25);
+        }
+        if (key == KeyEvent.VK_A) {
+            head.setxPos(head.getxPos() - 25);
+        }
+        if (key == KeyEvent.VK_D) {
+            head.setxPos(head.getxPos() + 25);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+        
     }
 }

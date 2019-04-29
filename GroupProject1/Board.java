@@ -189,25 +189,25 @@ public class Board extends JPanel implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_W) {
+        if (key == KeyEvent.VK_W && !DOWN) {
             UP = true;
             DOWN = false;
             LEFT = false;
             RIGHT = false;
         }
-        if (key == KeyEvent.VK_S) {
+        if (key == KeyEvent.VK_S && !UP) {
             UP = false;
             DOWN = true;
             LEFT = false;
             RIGHT = false;
         }
-        if (key == KeyEvent.VK_A) {
+        if (key == KeyEvent.VK_A && !RIGHT) {
             UP = false;
             DOWN = false;
             LEFT = true;
             RIGHT = false;
         }
-        if (key == KeyEvent.VK_D) {
+        if (key == KeyEvent.VK_D && !LEFT) {
             UP = false;
             DOWN = false;
             LEFT = false;

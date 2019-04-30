@@ -24,6 +24,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
     private int xPos = 250, yPos = 250;
     private boolean UP = false, DOWN = false, LEFT = false, RIGHT = false;
     private int counter = 0;
+    private int speed = 1500000;
 
     public boolean gameOver;
 
@@ -50,7 +51,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
     //Move the snake
     public void slither() {
         counter++;
-        if (counter > 1250000) {
+        if (counter > speed) {
             if (UP)
                 yPos -= PIXELS;
             if (DOWN)
@@ -111,7 +112,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
     //Gameover conditions
     public void collision(){
         //Out of bound check
-        if (head.getxPos() < 0 || head.getyPos() < 50 || head.getxPos() > WIDTH || head.getyPos() > HEIGHT - 75) {
+        if (xPos < 0 || yPos < 50 || xPos > WIDTH || yPos > HEIGHT - 75) {
             gameOver = true;
         }
 
@@ -143,17 +144,14 @@ public class Board extends JPanel implements Runnable, KeyListener {
                     tail = new Body(tail.getxPos() - 25, tail.getyPos(), PIXELS);
                     SNAKE.add(tail);
                 }
-                //if head goes left
                 if (LEFT) {
                     tail = new Body(tail.getxPos() + 25, tail.getyPos(), PIXELS);
                     SNAKE.add(tail);
                 }
-                //if head goes up
                 if (UP) {
                     tail = new Body(tail.getxPos(), tail.getyPos() + 25, PIXELS);
                     SNAKE.add(tail);
                 }
-                //if head goes down
                 if (DOWN) {
                     tail = new Body(tail.getxPos(), tail.getyPos() - 25, PIXELS);
                     SNAKE.add(tail);
@@ -161,22 +159,18 @@ public class Board extends JPanel implements Runnable, KeyListener {
             }
 
             if (SNAKE.size() > 2) {
-                //if head going right
                 if ((SNAKE.get(SNAKE.size() - 1).getxPos() + 25) == (SNAKE.get(SNAKE.size() - 2).getxPos())) {
                     tail = new Body(tail.getxPos() - 25, tail.getyPos(), PIXELS);
                     SNAKE.add(tail);
                 }
-                //if head goes left
                 if ((SNAKE.get(SNAKE.size() - 1).getxPos() - 25) == (SNAKE.get(SNAKE.size() - 2).getxPos())) {
                     tail = new Body(tail.getxPos() + 25, tail.getyPos(), PIXELS);
                     SNAKE.add(tail);
                 }
-                //if head goes up
                 if ((SNAKE.get(SNAKE.size() - 1).getyPos() - 25) == (SNAKE.get(SNAKE.size() - 2).getyPos())) {
                     tail = new Body(tail.getxPos(), tail.getyPos() + 25, PIXELS);
                     SNAKE.add(tail);
                 }
-                //if head goes down
                 if ((SNAKE.get(SNAKE.size() - 1).getyPos() + 25) == (SNAKE.get(SNAKE.size() - 2).getyPos())) {
                     tail = new Body(tail.getxPos(), tail.getyPos() - 25, PIXELS);
                     SNAKE.add(tail);
@@ -186,9 +180,12 @@ public class Board extends JPanel implements Runnable, KeyListener {
     }
 
     public String scoreKeeper(){
-        if(head.getxPos() == xApple && head.getyPos() == yApple) {
+        if(head.getxPos() == xApple && head.getyPos() == yApple)
             score += 10;
-        }
+        if (score == 100)
+            speed -= 50000;
+        if (score > 100 && score % 100 == 0)
+            speed -= 50000;
         return Integer.toString(score);
     }
 
@@ -196,7 +193,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        g.setColor(Color.GREEN);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 50, WIDTH, HEIGHT - 100);
 
         //Draw 20 x 28 grid

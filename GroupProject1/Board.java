@@ -22,9 +22,9 @@ public class Board extends JPanel implements Runnable, KeyListener {
     private int score;
 
     private int xPos = 250, yPos = 250;
-    private boolean UP = false, DOWN = false, LEFT = false, RIGHT = false;
+    private boolean UP, DOWN, LEFT, RIGHT;
     private int counter = 0;
-    private int speed = 1500000;
+    private int speed = 1250000;
 
     public boolean gameOver;
 
@@ -109,10 +109,10 @@ public class Board extends JPanel implements Runnable, KeyListener {
         g.fillRect(xApple, yApple, PIXELS, PIXELS);
     }
 
-    //Gameover conditions
+    
     public void collision(){
         //Out of bound check
-        if (xPos < 0 || yPos < 50 || xPos > WIDTH || yPos > HEIGHT - 75) {
+        if (head.getxPos() < 0 || head.getyPos < 50 || head.getxPos > WIDTH || head.getyPos() > HEIGHT - 75) {
             gameOver = true;
         }
 
@@ -182,10 +182,6 @@ public class Board extends JPanel implements Runnable, KeyListener {
     public String scoreKeeper(){
         if(head.getxPos() == xApple && head.getyPos() == yApple)
             score += 10;
-        if (score == 100)
-            speed -= 50000;
-        if (score > 100 && score % 100 == 0)
-            speed -= 50000;
         return Integer.toString(score);
     }
 
@@ -235,7 +231,19 @@ public class Board extends JPanel implements Runnable, KeyListener {
             LEFT = false;
             RIGHT = false;
         }
+        if (key == KeyEvent.VK_UP && !DOWN) {
+            UP = true;
+            DOWN = false;
+            LEFT = false;
+            RIGHT = false;
+        }
         if (key == KeyEvent.VK_S && !UP) {
+            UP = false;
+            DOWN = true;
+            LEFT = false;
+            RIGHT = false;
+        }
+        if (key == KeyEvent.VK_DOWN && !UP) {
             UP = false;
             DOWN = true;
             LEFT = false;
@@ -247,7 +255,19 @@ public class Board extends JPanel implements Runnable, KeyListener {
             LEFT = true;
             RIGHT = false;
         }
+        if (key == KeyEvent.VK_LEFT && !RIGHT) {
+            UP = false;
+            DOWN = false;
+            LEFT = true;
+            RIGHT = false;
+        }
         if (key == KeyEvent.VK_D && !LEFT) {
+            UP = false;
+            DOWN = false;
+            LEFT = false;
+            RIGHT = true;
+        }
+        if (key == KeyEvent.VK_RIGHT && !LEFT) {
             UP = false;
             DOWN = false;
             LEFT = false;

@@ -110,9 +110,9 @@ public class Board extends JPanel implements Runnable, KeyListener {
     }
 
     
-    public void collision(){
+   public void collision(){
         //Out of bound check
-        if (head.getxPos() < 0 || head.getyPos < 50 || head.getxPos > WIDTH || head.getyPos() > HEIGHT - 75) {
+        if (head.getxPos() < 0 || head.getyPos() < 50 || head.getxPos() > WIDTH || head.getyPos() > HEIGHT - 75) {
             gameOver = true;
         }
 

@@ -164,6 +164,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
                 //if head going right
                 if ((SNAKE.get(SNAKE.size() - 1).getxPos() + 25) == (SNAKE.get(SNAKE.size() - 2).getxPos())) {
                     tail = new Body(tail.getxPos() - 25, tail.getyPos(), PIXELS);
+                    SNAKE.add(tail);
                 }
                 //if head goes left
                 if ((SNAKE.get(SNAKE.size() - 1).getxPos() - 25) == (SNAKE.get(SNAKE.size() - 2).getxPos())) {

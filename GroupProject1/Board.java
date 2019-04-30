@@ -138,25 +138,48 @@ public class Board extends JPanel implements Runnable, KeyListener {
     //Adds on to the tail
     public void elongate(){
         if(head.getxPos() == xApple && head.getyPos() == yApple) {
-            //if head going right
-            if (RIGHT) {
-                tail = new Body(tail.getxPos() - 25, tail.getyPos(), PIXELS);
-                SNAKE.add(tail);
+            if(SNAKE.size() <= 2){
+                if (RIGHT) {
+                    tail = new Body(tail.getxPos() - 25, tail.getyPos(), PIXELS);
+                    SNAKE.add(tail);
+                }
+                //if head goes left
+                if (LEFT) {
+                    tail = new Body(tail.getxPos() + 25, tail.getyPos(), PIXELS);
+                    SNAKE.add(tail);
+                }
+                //if head goes up
+                if (UP) {
+                    tail = new Body(tail.getxPos(), tail.getyPos() + 25, PIXELS);
+                    SNAKE.add(tail);
+                }
+                //if head goes down
+                if (DOWN) {
+                    tail = new Body(tail.getxPos(), tail.getyPos() - 25, PIXELS);
+                    SNAKE.add(tail);
+                }
             }
-            //if head goes left
-            if (LEFT) {
-                tail = new Body(tail.getxPos() + 25, tail.getyPos(), PIXELS);
-                SNAKE.add(tail);
-            }
-            //if head goes up
-            if (UP) {
-                tail = new Body(tail.getxPos(), tail.getyPos() + 25, PIXELS);
-                SNAKE.add(tail);
-            }
-            //if head goes down
-            if (DOWN) {
-                tail = new Body(tail.getxPos(), tail.getyPos() - 25, PIXELS);
-                SNAKE.add(tail);
+
+            if (SNAKE.size() > 2) {
+                //if head going right
+                if ((SNAKE.get(SNAKE.size() - 1).getxPos() + 25) == (SNAKE.get(SNAKE.size() - 2).getxPos())) {
+                    tail = new Body(tail.getxPos() - 25, tail.getyPos(), PIXELS);
+                }
+                //if head goes left
+                if ((SNAKE.get(SNAKE.size() - 1).getxPos() - 25) == (SNAKE.get(SNAKE.size() - 2).getxPos())) {
+                    tail = new Body(tail.getxPos() + 25, tail.getyPos(), PIXELS);
+                    SNAKE.add(tail);
+                }
+                //if head goes up
+                if ((SNAKE.get(SNAKE.size() - 1).getyPos() - 25) == (SNAKE.get(SNAKE.size() - 2).getyPos())) {
+                    tail = new Body(tail.getxPos(), tail.getyPos() + 25, PIXELS);
+                    SNAKE.add(tail);
+                }
+                //if head goes down
+                if ((SNAKE.get(SNAKE.size() - 1).getyPos() + 25) == (SNAKE.get(SNAKE.size() - 2).getyPos())) {
+                    tail = new Body(tail.getxPos(), tail.getyPos() - 25, PIXELS);
+                    SNAKE.add(tail);
+                }
             }
         }
     }

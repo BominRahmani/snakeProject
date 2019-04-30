@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Board extends JPanel implements Runnable, KeyListener {
 
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 600;
     private static final int PIXELS = 25;
 
     private static final Color APPLE = Color.RED;
@@ -41,8 +41,8 @@ public class Board extends JPanel implements Runnable, KeyListener {
         LEFT = false;
         RIGHT = false;
 
-        xApple = randomNum();
-        yApple = randomNum();
+        xApple = randomX();
+        yApple = randomY();
 
         addKeyListener(this);
     }
@@ -77,9 +77,14 @@ public class Board extends JPanel implements Runnable, KeyListener {
         head.setyPos(yPos);
     }
 
-    public int randomNum() {
+    public int randomX() {
         Random rand = new Random();
-        return rand.nextInt(20) * 25;
+        return rand.nextInt(28) * 25;
+    }
+
+    public int randomY() {
+        Random rand = new Random();
+        return (rand.nextInt(20) + 2) * 25;
     }
 
     public int length() {
@@ -96,8 +101,8 @@ public class Board extends JPanel implements Runnable, KeyListener {
     //Place apple on grid
     public void spawnApple(Graphics g) {
         while (!checkGrid(xApple, yApple)) {
-            xApple = randomNum();
-            yApple = randomNum();
+            xApple = randomX();
+            yApple = randomY();
         }
         g.setColor(APPLE);
         g.fillRect(xApple, yApple, PIXELS, PIXELS);
@@ -106,7 +111,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
     //Gameover conditions
     public void collision(){
         //Out of bound check
-        if (xPos < 0 || yPos < 0 || xPos > 475 || yPos > 475) {
+        if (xPos < 0 || yPos < 50 || xPos > WIDTH || yPos > HEIGHT - 75) {
             gameOver = true;
         }
 
@@ -120,6 +125,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
 
     public boolean checkGrid(int x, int y) {
         elongate();
+        scoreKeeper();
         collision();
         for (int i = 0; i < length(); i++) {
             if ((SNAKE.get(i).getxPos() == x) && (SNAKE.get(i).getyPos() == y)) {
@@ -155,18 +161,31 @@ public class Board extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    public String scoreKeeper(){
+        if(head.getxPos() == xApple && head.getyPos() == yApple) {
+            score += 10;
+        }
+        return Integer.toString(score);
+    }
+
     public void paintComponent(Graphics g) {
         g.clearRect(0, 0, WIDTH, HEIGHT);
-        g.setColor(Color.GREEN);
+        g.setColor(Color.GRAY);
         g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.setColor(Color.GREEN);
+        g.fillRect(0, 50, WIDTH, HEIGHT - 100);
 
-        //Draw 20 x 20 grid
+        //Draw 20 x 28 grid
         for (int i = 0; i < WIDTH / 25; i++) {
-            g.drawLine(i * 25, 0, i * 25, HEIGHT);
+            g.drawLine(i * 25, 50, i * 25, HEIGHT - 50);
         }
-        for (int i = 0; i < HEIGHT / 25; i++) {
-            g.drawLine(0, i * 25, HEIGHT, i * 25);
+        for (int i = 2; i < (HEIGHT - 25) / 25; i++) {
+            g.drawLine(0, i * 25, WIDTH, i * 25);
         }
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 24));
+        g.drawString(scoreKeeper(), 0,25);
 
         spawnSnake(g);
         spawnApple(g);

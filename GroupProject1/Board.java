@@ -119,7 +119,7 @@ public class Board extends JPanel implements Runnable, KeyListener {
     //Gameover conditions
     public void collision(){
         //Out of bound check
-        if (xPos < 0 || yPos < 50 || xPos > WIDTH - 25 || yPos > HEIGHT - 75) {
+        if (head.getxPos() < 0 || head.getyPos() < 50 || head.getxPos() > WIDTH || head.getyPos() > HEIGHT - 75) {
             gameOver = true;
         }
 
@@ -238,11 +238,17 @@ public class Board extends JPanel implements Runnable, KeyListener {
 
     }
 
-    @Override
+     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_W && !DOWN) {
+            UP = true;
+            DOWN = false;
+            LEFT = false;
+            RIGHT = false;
+        }
+        if (key == KeyEvent.VK_UP && !DOWN) {
             UP = true;
             DOWN = false;
             LEFT = false;
@@ -254,13 +260,31 @@ public class Board extends JPanel implements Runnable, KeyListener {
             LEFT = false;
             RIGHT = false;
         }
+        if (key == KeyEvent.VK_DOWN && !UP) {
+            UP = false;
+            DOWN = true;
+            LEFT = false;
+            RIGHT = false;
+        }
         if (key == KeyEvent.VK_A && !RIGHT) {
             UP = false;
             DOWN = false;
             LEFT = true;
             RIGHT = false;
         }
+        if (key == KeyEvent.VK_LEFT && !RIGHT) {
+            UP = false;
+            DOWN = false;
+            LEFT = true;
+            RIGHT = false;
+        }
         if (key == KeyEvent.VK_D && !LEFT) {
+            UP = false;
+            DOWN = false;
+            LEFT = false;
+            RIGHT = true;
+        }
+        if (key == KeyEvent.VK_RIGHT && !LEFT) {
             UP = false;
             DOWN = false;
             LEFT = false;

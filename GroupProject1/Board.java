@@ -14,12 +14,12 @@ public class Board extends JPanel implements Runnable, KeyListener {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 600;
     private static final int PIXELS = 25;
-    private static final int SPEED = 1250000;
+    private static final int SPEED = 1250000; //Regulate the speed of snake
     private static final Color headColor = new Color(255, 194, 87);
     private static final Color bodyColor = Color.YELLOW;
-    private static final ImageIcon FIELD = new ImageIcon("C:\\Users\\kpopw\\Documents\\NetBeansProjects\\snakeProject\\src\\Grass.png");
-    private static final ImageIcon APPLE = new ImageIcon("C:\\Users\\kpopw\\Documents\\NetBeansProjects\\snakeProject\\src\\Apple.png");
-    private static final String SOUND = "C:\\Users\\kpopw\\Documents\\NetBeansProjects\\snakeProject\\src\\Crunch.wav";
+    private static final ImageIcon FIELD = new ImageIcon("**Insert directory for Grass.png**");
+    private static final ImageIcon APPLE = new ImageIcon("**Insert directory for Apple.png**");
+    private static final String SOUND = "Insert directory for Crunch.wav";
 
     private int xApple;
     private int yApple;
@@ -216,7 +216,8 @@ public class Board extends JPanel implements Runnable, KeyListener {
         g.setColor(Color.BLACK);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 24));
         g.drawString(scoreKeeper(), 0,25);
-
+        
+        //Display length of snake
         g.drawString("Size: " + length(), 200, 25);
 
         spawnSnake(g);
@@ -241,14 +242,13 @@ public class Board extends JPanel implements Runnable, KeyListener {
      @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+        
+        key = (key == KeyEvent.VK_UP) ? KeyEvent.VK_W : key;
+        key = (key == KeyEvent.VK_DOWN) ? KeyEvent.VK_S : key;
+        key = (key == KeyEvent.VK_LEFT) ? KeyEvent.VK_A : key;
+        key = (key == KeyEvent.VK_RIGHT) ? KeyEvent.VK_D : key;
 
-        if (key == KeyEvent.VK_W && !DOWN) {
-            UP = true;
-            DOWN = false;
-            LEFT = false;
-            RIGHT = false;
-        }
-        if (key == KeyEvent.VK_UP && !DOWN) {
+        if ((key == KeyEvent.VK_W && !DOWN) {
             UP = true;
             DOWN = false;
             LEFT = false;
@@ -260,31 +260,13 @@ public class Board extends JPanel implements Runnable, KeyListener {
             LEFT = false;
             RIGHT = false;
         }
-        if (key == KeyEvent.VK_DOWN && !UP) {
-            UP = false;
-            DOWN = true;
-            LEFT = false;
-            RIGHT = false;
-        }
         if (key == KeyEvent.VK_A && !RIGHT) {
             UP = false;
             DOWN = false;
             LEFT = true;
             RIGHT = false;
         }
-        if (key == KeyEvent.VK_LEFT && !RIGHT) {
-            UP = false;
-            DOWN = false;
-            LEFT = true;
-            RIGHT = false;
-        }
         if (key == KeyEvent.VK_D && !LEFT) {
-            UP = false;
-            DOWN = false;
-            LEFT = false;
-            RIGHT = true;
-        }
-        if (key == KeyEvent.VK_RIGHT && !LEFT) {
             UP = false;
             DOWN = false;
             LEFT = false;
